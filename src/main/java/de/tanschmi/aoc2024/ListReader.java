@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
+
+import static de.tanschmi.aoc2024.NumberUtil.parseToInt;
+import static de.tanschmi.aoc2024.NumberUtil.parseToLong;
 
 @Slf4j
 public class ListReader {
@@ -31,23 +33,6 @@ public class ListReader {
 
     }
 
-    long parseToLong(String s) {
-        try {
-            return Long.parseLong(s.trim());
-        } catch (NumberFormatException e) {
-            log.error("Fehler bei Wert {}", s);
-            throw e;
-        }
-    }
-
-    int parseToInt(String s) {
-        try {
-            return Integer.parseInt(s.trim());
-        } catch (NumberFormatException e) {
-            log.error("Fehler bei Wert {}", s);
-            throw e;
-        }
-    }
 
     public List<Sequence> readSequences(File input) throws IOException {
         List<String> lines = FileUtils.readLines(input, Charset.defaultCharset());

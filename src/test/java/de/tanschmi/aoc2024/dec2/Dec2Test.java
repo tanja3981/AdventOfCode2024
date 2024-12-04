@@ -13,7 +13,7 @@ class Dec2Test {
     private final Dec2 task = new Dec2();
 
     @Test
-    void step1() throws IOException {
+    void task1() throws IOException {
         final int expected = 432;
         File f = new File(ClassLoader.getSystemResource("inputs/dec2.txt").getFile());
 
@@ -21,7 +21,7 @@ class Dec2Test {
     }
 
     @Test
-    void step2() throws IOException {
+    void task2() throws IOException {
         final int expected = 488;
         File f = new File(ClassLoader.getSystemResource("inputs/dec2.txt").getFile());
         assertEquals(expected, task.step2(f));

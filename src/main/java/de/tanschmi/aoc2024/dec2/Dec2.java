@@ -54,14 +54,14 @@ public class Dec2 {
     }
 
     boolean areSubsequencesSafe(Sequence seq) {
-        int safe = 0;
+
         for (int i = 0; i < seq.size(); i++) {
             ArrayList<Integer> subseq = seq.getWithoutCol(i);
             if (isSequenceSafe(subseq)) {
-                safe++;
+                return true;
             }
         }
-        return safe > 0;
+        return false;
     }
 
     boolean isSequenceSafe(ArrayList<Integer> columns) {
