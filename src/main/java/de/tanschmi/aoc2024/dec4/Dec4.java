@@ -6,7 +6,8 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
+
+import static de.tanschmi.aoc2024.CharUtils.textToCharArray;
 
 @Slf4j
 public class Dec4 {
@@ -143,14 +144,5 @@ public class Dec4 {
     }
 
 
-    char[][] textToCharArray(String text) {
-        List<String> list = text.lines().toList();
 
-        char[][] chars = new char[list.size()][];
-        int l = 0;
-        for (String s : list) {
-            chars[l++] = s.toCharArray();
-        }
-        return chars;
-    }
 }
