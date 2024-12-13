@@ -1,4 +1,4 @@
-package de.tanschmi.aoc2024.dec13;
+package de.tanschmi.aoc2024.dec13.task1;
 
 import org.junit.jupiter.api.Test;
 

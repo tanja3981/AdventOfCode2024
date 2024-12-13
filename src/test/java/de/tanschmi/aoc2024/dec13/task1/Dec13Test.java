@@ -1,4 +1,4 @@
-package de.tanschmi.aoc2024.dec13;
+package de.tanschmi.aoc2024.dec13.task1;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class Dec13Test {
     void task1() throws IOException {
         File inFile = new File(ClassLoader.getSystemResource("inputs/dec13.txt").getFile());
 
-        int result = dec13.task1(inFile);
+        long result = dec13.task1(inFile);
         assertEquals(34787, result);
     }
 

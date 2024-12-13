@@ -1,4 +1,4 @@
-package de.tanschmi.aoc2024.dec13;
+package de.tanschmi.aoc2024.dec13.task1;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -40,7 +40,7 @@ public class InfileParser {
         return claws;
     }
 
-    private Claw parseClaw(String buttonA, String buttonB, String prize) {
+    Claw parseClaw(String buttonA, String buttonB, String prize) {
 
         Claw claw = new Claw();
         claw.setA(parseA(buttonA));
@@ -66,7 +66,7 @@ public class InfileParser {
         return parseLoc(in, prefix.length(), iComma, iSeperator + separator.length());
     }
 
-    Loc parsePrize(String in) {
+    protected Loc parsePrize(String in) {
         final String prefix = "Prize: X=";
         final String separator = ", Y=";
         int iComma = in.indexOf(",");
@@ -74,7 +74,7 @@ public class InfileParser {
         return parseLoc(in, prefix.length(), iComma, iSeperator + separator.length());
     }
 
-    private Loc parseLoc(String in, int indexX, int indexComma, int indexY) {
+    protected Loc parseLoc(String in, int indexX, int indexComma, int indexY) {
         String sx = in.substring(indexX, indexComma);
         String sy = in.substring(indexY);
         try {

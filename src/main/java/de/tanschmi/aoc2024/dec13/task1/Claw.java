@@ -1,4 +1,4 @@
-package de.tanschmi.aoc2024.dec13;
+package de.tanschmi.aoc2024.dec13.task1;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +13,3 @@ public class Claw {
 
 }
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-class Loc {
-    int x;
-    int y;
-}
