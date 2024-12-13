@@ -16,6 +16,31 @@ class Dec11Test {
     }
 
     @Test
+    void task2_25times() {
+        long result = 0;
+        final String input = "28591 78 0 3159881 4254 524155 598 1";
+        try {
+            result = new Dec11().task2(input, 25);
+        } catch (Error e) {
+            e.printStackTrace();
+        }
+        assertEquals(220722, result);
+
+    }
+
+    @Test
+    void task2_75times() {
+        long result = 0;
+        final String input = "28591 78 0 3159881 4254 524155 598 1";
+        try {
+            result = new Dec11().task2(input, 75);
+        } catch (Error e) {
+            e.printStackTrace();
+        }
+        assertEquals(261952051690787L, result);
+    }
+
+    @Test
     void task1_example() {
         final String input = "125 17";
 
@@ -24,18 +49,4 @@ class Dec11Test {
 
     }
 
-    @Test
-    void splitStone() {
-
-        Long[] result = service.splitStone("2024");
-
-        assertEquals(2, result.length);
-        assertEquals(20L, result[0]);
-        assertEquals(24L, result[1]);
-
-        result = service.splitStone("1000");
-        assertEquals(2, result.length);
-        assertEquals(10L, result[0]);
-        assertEquals(0L, result[1]);
-    }
 }
