@@ -4,7 +4,7 @@ import java.util.List;
 
 public class WarehouseParser {
 
-    char[][] parseWarehouse(String input) {
+    public char[][] parseWarehouse(String input) {
 
         List<String> lines = input.lines().toList();
         char[][] warehouse = new char[lines.size()][];
