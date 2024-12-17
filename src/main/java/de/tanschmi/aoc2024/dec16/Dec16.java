@@ -7,7 +7,7 @@ import java.util.*;
 public class Dec16 {
     static final ArrayList<Integer> allDirections = new ArrayList<>(Arrays.asList(Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.NORTH));
 
-    public int task1(String input) {
+    public int task(Task task, String input) {
 
         //use same parser as for warehouse on Dec15
         char[][] maze = new WarehouseParser().parseWarehouse(input);
@@ -30,18 +30,20 @@ public class Dec16 {
 
         boolean[][][] visited = new boolean[maze.length][maze[0].length][4];
         PriorityQueue<State> nextPos = new PriorityQueue<>(Comparator.comparingInt(s -> s.cost));
-        nextPos.offer(new State(startRow, startCol, 0, Direction.EAST));
-        //nextPos.offer(new State(startRow, startCol, 0, Direction.SOUTH));
-        //nextPos.offer(new State(startRow, startCol, 0, Direction.NORTH));
+        nextPos.offer(new State(startRow, startCol, 0, Direction.EAST, null));
 
-
+        int shortestDistance = Integer.MAX_VALUE;
+        ArrayList<State> endStates = new ArrayList<>();
         while (!nextPos.isEmpty()) {
-            visualizeMaze(maze, visited);
+            //visualizeMaze(maze, visited);
             State currentStep = nextPos.poll();
 
             int row = currentStep.row, col = currentStep.col, distance = currentStep.cost, direction = currentStep.direction;
             if (row == endRow && col == endCol) {
-                return distance;
+                //visualizeMaze(maze, visited);
+                shortestDistance = Math.min(shortestDistance, distance);
+                endStates.add(currentStep);
+                continue;
             }
             if (visited[row][col][direction] /*== true*/) {
                 continue;
@@ -67,19 +69,19 @@ public class Dec16 {
             for (int i = 0; i < possibleDirs.size(); i++) { //alle Richtungen außer Kehrtwende
                 int newRow = row, newCol = col, newDirection = possibleDirs.get(i);
 
-                    if (newDirection == Direction.NORTH) {//oben
-                        newRow = row - 1;
-                        newCol = col;
-                    } else if (newDirection == Direction.SOUTH) {//unten
-                        newRow = row + 1;
-                        newCol = col;
-                    } else if (newDirection == Direction.WEST) {//links
-                        newRow = row;
-                        newCol = col - 1;
-                    } else if (newDirection == Direction.EAST) {//rechts
-                        newRow = row;
-                        newCol = col + 1;
-                    }
+                if (newDirection == Direction.NORTH) {//oben
+                    newRow = row - 1;
+                    newCol = col;
+                } else if (newDirection == Direction.SOUTH) {//unten
+                    newRow = row + 1;
+                    newCol = col;
+                } else if (newDirection == Direction.WEST) {//links
+                    newRow = row;
+                    newCol = col - 1;
+                } else if (newDirection == Direction.EAST) {//rechts
+                    newRow = row;
+                    newCol = col + 1;
+                }
 
 
                 if (checkValidRow(newRow, maze.length)
@@ -92,11 +94,26 @@ public class Dec16 {
                     } else {
                         newCost = distance + 1;
                     }
-                    nextPos.offer(new State(newRow, newCol, newCost, newDirection));
+                    nextPos.offer(new State(newRow, newCol, newCost, newDirection, currentStep));
                 }
             }
         }
-        return -1;
+
+
+        if (task == Task.TASK1) {
+            return shortestDistance;
+        } else {
+            HashSet<int[]> path = new HashSet<>();
+            for(State endState : endStates) {
+
+                while (endState != null) {
+                    path.add(new int[]{endState.row, endState.col});
+                    endState = endState.previous;
+                }
+               // minTiles = Math.min(minTiles, path.size());
+            }
+            return path.size();
+        }
     }
 
     private void visualizeMaze(char[][] maze, boolean[][][] visited) {
@@ -104,20 +121,20 @@ public class Dec16 {
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[row].length; col++) {
                 if (visited[row][col][Direction.NORTH]) {
-                    builder.append('^');
-                } else if (visited[row][col][Direction.WEST]) {
-                    builder.append('<');
-                } else if (visited[row][col][Direction.SOUTH]) {
-                    builder.append('v');
+                    builder.append('0');
                 } else if (visited[row][col][Direction.EAST]) {
-                    builder.append('>');
+                    builder.append('0');
+                } else if (visited[row][col][Direction.WEST]) {
+                    builder.append('0');
+                } else if (visited[row][col][Direction.SOUTH]) {
+                    builder.append('0');
                 } else {
                     builder.append(maze[row][col]);
                 }
             }
             builder.append('\n');
         }
-       // System.out.println(builder.toString());
+        System.out.println(builder.toString());
 
     }
 

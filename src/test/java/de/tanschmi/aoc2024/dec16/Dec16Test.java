@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Dec16Test {
-
+    Dec16 dec16 = new Dec16();
     @Test
     void task1_ex1() {
         String input = """
@@ -30,8 +30,7 @@ class Dec16Test {
                 #S..#.....#...#
                 ###############""";
 
-        Dec16 dec16 = new Dec16();
-        int result = dec16.task1(input);
+        int result = dec16.task(Task.TASK1, input);
         assertEquals(7036, result);
     }
 
@@ -56,8 +55,7 @@ class Dec16Test {
                 #S#.............#
                 #################""";
 
-        Dec16 dec16 = new Dec16();
-        int result = dec16.task1(input);
+        int result = dec16.task(Task.TASK1, input);
         assertEquals(11048, result);
     }
 
@@ -66,8 +64,30 @@ class Dec16Test {
         File infile = new File(ClassLoader.getSystemResource("inputs/dec16.txt").getFile());
         String input = FileUtils.readFileToString(infile, Charset.defaultCharset());
 
-        Dec16 dec16 = new Dec16();
-        int result = dec16.task1(input);
+        int result = dec16.task(Task.TASK1, input);
         assertEquals(85420, result);
+    }
+
+    @Test
+    void task2_ex1() {
+        String input = """
+                ###############
+                #.......#....E#
+                #.#.###.#.###.#
+                #.....#.#...#.#
+                #.###.#####.#.#
+                #.#.#.......#.#
+                #.#.#####.###.#
+                #...........#.#
+                ###.#.#####.#.#
+                #...#.....#.#.#
+                #.#.#.###.#.#.#
+                #.....#...#.#.#
+                #.###.#.#.#.#.#
+                #S..#.....#...#
+                ###############""";
+
+        int result = dec16.task(Task.TASK2, input);
+        assertEquals(45, result);
     }
 }
