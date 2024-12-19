@@ -6,4 +6,9 @@ import lombok.AllArgsConstructor;
 public class Coord {
     int row;
     int col;
+
+    @Override
+    public String toString() {
+        return col + "," + row;
+    }
 }

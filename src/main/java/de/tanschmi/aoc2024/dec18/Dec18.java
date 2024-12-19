@@ -35,6 +35,34 @@ public class Dec18 {
         return result;
     }
 
+    Coord task2(String input, int range, int stepsStart) {
+        ArrayList<Coord> coords = new CoordinateReader().readCoordinates(input);
+
+        char[][] mem = new char[range][range];
+        //initialize
+        for (char[] chars : mem) {
+            Arrays.fill(chars, '.');
+        }
+        for (int step = 0; step < stepsStart; step++) {
+            Coord c = coords.get(step);
+            mem[c.row][c.col] = CORRUPTED;
+        }
+        //log.info("Memory after {} steps: \n{}", stepsStart, CharUtils.toString(mem));
+
+        for (int noSteps = stepsStart; noSteps < coords.size(); noSteps++) {
+
+            Coord c = coords.get(noSteps);
+            mem[c.row][c.col] = CORRUPTED;
+
+            long result = findStepsThroughMemory(mem);
+            if (result == -1) {
+                //log.info("Memory after {} steps: \n{}", noSteps, CharUtils.toString(mem));
+                return c;
+            }
+        }
+        return null;
+    }
+
     long findStepsThroughMemory(char[][] maze) {
         List<State> reached = new ArrayList<>();
 
