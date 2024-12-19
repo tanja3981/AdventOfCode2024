@@ -3,7 +3,7 @@ package de.tanschmi.aoc2024.dec16;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class State {
+class State {
     int row, col, cost, direction; // Aktuelle Position, Kosten, Richtung
     State previous;
 
