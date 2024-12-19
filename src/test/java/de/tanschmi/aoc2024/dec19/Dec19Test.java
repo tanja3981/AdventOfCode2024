@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -41,5 +45,35 @@ class Dec19Test {
 
         int result = dec19.task1(available, desings);
         assertEquals(6, result);
+    }
+
+    @Test
+    void task2_example() {
+        String available = "r, wr, b, g, bwu, rb, gb, br";
+        String desings = """
+                brwrr
+                bggr
+                gbbr
+                rrbgbr
+                ubwu
+                bwurrg
+                brgr
+                bbrgwb
+                """;
+
+        long result = dec19.task2(available, desings);
+        assertEquals(16, result);
+    }
+    @Test
+    void task2() throws IOException {
+        File availFile = new File(ClassLoader.getSystemResource("inputs/dec19_available.txt").getFile());
+        String available = FileUtils.readFileToString(availFile, Charset.defaultCharset());
+
+        File designsFile = new File(ClassLoader.getSystemResource("inputs/dec19_designs.txt").getFile());
+        String designs = FileUtils.readFileToString(designsFile, Charset.defaultCharset());
+
+        long result = dec19.task2(available, designs);
+        assertEquals(595975512785325L, result);
+
     }
 }
