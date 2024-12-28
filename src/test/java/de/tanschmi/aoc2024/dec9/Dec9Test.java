@@ -31,4 +31,24 @@ class Dec9Test {
         assertEquals(6307275788409L, result);
 
     }
+
+
+    @Test
+    void task2_example() {
+        String input = """
+                2333133121414131402""";
+
+        long result = service.task2(input);
+        assertEquals(2858, result);
+    }
+
+    @Test
+    void task2() throws IOException {
+
+        File file = new File(ClassLoader.getSystemResource("inputs/dec9.txt").getFile());
+        String input = FileUtils.readFileToString(file, Charset.defaultCharset());
+
+        long result = service.task2(input);
+        assertEquals(6327174563252L, result);
+    }
 }

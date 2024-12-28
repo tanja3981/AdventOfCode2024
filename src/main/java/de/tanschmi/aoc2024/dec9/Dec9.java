@@ -49,6 +49,54 @@ public class Dec9 {
         return result;
     }
 
+    long task2(String input) {
+        ArrayList<DiskItem> disk = getDisc(input);
+
+        int ptrLast = disk.size() - 1;
+
+        while (ptrLast > 0) {
+            DiskItem last = disk.get(ptrLast);
+            if (last.isEmpty) {
+                ptrLast--;
+                continue;
+            }
+            int ptrFree = 0;
+            while (ptrFree < disk.size() && ptrFree < ptrLast) {
+                DiskItem free = disk.get(ptrFree);
+                if (!free.isEmpty) {
+                    ptrFree++;
+                    continue;
+                }
+                int sizeIdToMove = last.size;
+                int freeSize = free.size;
+                if (sizeIdToMove <= freeSize) {
+                    DiskItem newItem = new DiskItem(last.id, sizeIdToMove);
+                    free.size = free.size - sizeIdToMove;
+                    disk.add(ptrFree, newItem);
+                    last.isEmpty = true;
+                    last.id = null;
+
+                    if (free.size == 0) {
+                        disk.remove(free);
+                        //System.out.println(printDisk(disk));
+                    }
+                    break;
+                } else {
+                    ptrFree++;
+                }
+
+            }
+            ptrLast--;
+           // System.out.println(printDisk(disk));
+        }
+        System.out.println(printDisk(disk));
+
+        long result = calcChecksum(disk);
+
+        return result;
+
+    }
+
     String printDisk(ArrayList<DiskItem> disk) {
         StringBuilder builder = new StringBuilder();
         for (DiskItem item : disk) {
@@ -114,5 +162,12 @@ class DiskItem {
         this.size = size;
     }
 
-
+    @Override
+    public String toString() {
+        if (isEmpty) {
+            return "empty(" + size + ")";
+        } else {
+            return "id" + id + "(" + size + ")";
+        }
+    }
 }
