@@ -3,27 +3,116 @@ package de.tanschmi.aoc2024.dec9;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
+import java.util.ArrayList;
 
 @Slf4j
 public class Dec9 {
 
-    int task1(File input) {
+    long task1(String input) {
 
+        ArrayList<DiskItem> disk = getDisc(input);
+
+        int ptrLast = disk.size() - 1;
+        int ptrFree = 0;
+        while (ptrLast > ptrFree) {
+            DiskItem last = disk.get(ptrLast);
+            while (ptrFree < disk.size()) {
+                DiskItem free = disk.get(ptrFree);
+                if (!free.isEmpty) {
+                    ptrFree++;
+                    continue;
+                } else {
+                    int sizeIdToMove = last.size;
+                    int freeSize = free.size;
+
+                    if (sizeIdToMove <= freeSize) {
+                        DiskItem newItem = new DiskItem(last.id, sizeIdToMove);
+                        free.size = free.size - sizeIdToMove;
+                        disk.add(ptrFree, newItem);
+                        disk.remove(last);
+                        ptrLast--;
+                        break;
+                    } else {
+                        DiskItem newItem = new DiskItem(last.id, freeSize);
+                        last.size = last.size - freeSize;
+                        disk.add(ptrFree, newItem);
+                        disk.remove(free);
+                    }
+                }
+            }
+
+        }
+        System.out.println(printDisk(disk));
+
+        long result = calcChecksum(disk);
+
+        return result;
     }
 
-    int task1(String input) {
-
-        String disk = getDisc(input);
-
-        return 0;
+    String printDisk(ArrayList<DiskItem> disk) {
+        StringBuilder builder = new StringBuilder();
+        for (DiskItem item : disk) {
+            if (item.isEmpty) {
+                builder.append(StringUtils.repeat('.', item.size));
+            } else {
+                builder.append(StringUtils.repeat(item.id.toString(), item.size));
+            }
+        }
+        return builder.toString();
     }
 
-    String getDisc(String input) {
+    private long calcChecksum(ArrayList<DiskItem> disk) {
+        long sum = 0;
+        long index = 0;
+        for (int i = 0; i < disk.size(); i++) {
+            DiskItem item = disk.get(i);
+
+            if (!item.isEmpty && item.id != null) {
+
+                for (int j = 0; j < item.size; j++) {
+                    sum += index++ * item.id;
+                }
+
+            } else {
+                index += item.size;
+            }
+        }
+        return sum;
+    }
+
+    ArrayList<DiskItem> getDisc(String input) {
         char[] chars = input.toCharArray();
-        StringBuilder disk = new StringBuilder();
 
+        ArrayList<DiskItem> disk = new ArrayList<>();
 
+        int id = 0;
+        for (int i = 0; i < chars.length; i++) {
 
+            int size = Integer.parseInt("" + chars[i]);
+            if (i % 2 == 0) {
+                disk.add(new DiskItem(id++, size));
+            } else {
+                disk.add(new DiskItem(size));
+            }
+        }
+        return disk;
     }
+}
+
+class DiskItem {
+    boolean isEmpty = false;
+    int size;
+    Integer id = null;
+
+    public DiskItem(int id, int size) {
+        this.id = id;
+        this.size = size;
+    }
+
+    public DiskItem(int size) {
+        this.isEmpty = true;
+        this.size = size;
+    }
+
+
 }
