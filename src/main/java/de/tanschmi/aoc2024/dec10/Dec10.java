@@ -12,32 +12,81 @@ public class Dec10 {
 
         long result = 0;
         ArrayList<Coord> starts = findStarts(chars);
-        HashMap<Coord, Integer> trailheads = new HashMap<>();
         for (Coord coord : starts) {
-
             HashSet<Coord> tops = new HashSet<>();
-            findPaths(1, coord, chars, tops);
+            findPaths1(1, coord, chars, tops);
             result += tops.size();
         }
 
         return result;
     }
 
-    void findPaths(int i, Coord coord, char[][] chars, HashSet<Coord> tops) {
+    long task2(String input) {
 
+        char[][] chars = CharUtils.textToCharArray(input);
+        long result = 0;
+        ArrayList<Coord> starts = findStarts(chars);
 
-        ArrayList<Coord> nexts = getNext(coord);
+        for (Coord coord : starts) {
+
+            HashSet<Coord> tops = new HashSet<>();
+            findPaths2(1, coord, chars, tops);
+            result += tops.size();
+        }
+
+        return result;
+    }
+
+    void findPaths1(int i, Coord coord, char[][] chars, HashSet<Coord> tops) {
+        ArrayList<Coord> nexts = getNext1(coord);
         for (Coord next : nexts) {
             if (checkValid(next, chars)
                     && checkPath(i, next, chars)) {
                 if (i == 9) {
                     tops.add(next);
                 } else {
-                    findPaths(i + 1, next, chars, tops);
+                    findPaths1(i + 1, next, chars, tops);
                 }
             }
         }
+    }
+    ArrayList<Coord> getNext1(Coord coord) {
+        int row = coord.row;
+        int col = coord.col;
 
+        ArrayList<Coord> next = new ArrayList<>();
+        next.add(new Coord(row - 1, col)); //north
+        next.add(new Coord(row, col + 1));//east
+        next.add(new Coord(row + 1, col));//west
+        next.add(new Coord(row, col - 1));//east
+
+        return next;
+    }
+
+    void findPaths2(int i, Coord coord, char[][] chars, HashSet<Coord> tops) {
+        ArrayList<Coord> nexts = getNext2(coord);
+        for (Coord next : nexts) {
+            if (checkValid(next, chars)
+                    && checkPath(i, next, chars)) {
+                if (i == 9) {
+                    tops.add(next);
+                } else {
+                    findPaths2(i + 1, next, chars, tops);
+                }
+            }
+        }
+    }
+    ArrayList<Coord> getNext2(Coord coord) {
+        int row = coord.row;
+        int col = coord.col;
+
+        ArrayList<Coord> next = new ArrayList<>();
+        next.add(new Coord(row - 1, col, coord)); //north
+        next.add(new Coord(row, col + 1, coord));//east
+        next.add(new Coord(row + 1, col, coord));//west
+        next.add(new Coord(row, col - 1, coord));//east
+
+        return next;
     }
 
 
@@ -51,18 +100,7 @@ public class Dec10 {
     }
 
 
-    ArrayList<Coord> getNext(Coord coord) {
-        int row = coord.row;
-        int col = coord.col;
 
-        ArrayList<Coord> next = new ArrayList<>();
-        next.add(new Coord(row - 1, col)); //north
-        next.add(new Coord(row, col + 1));//east
-        next.add(new Coord(row + 1, col));//west
-        next.add(new Coord(row, col - 1));//east
-
-        return next;
-    }
 
     ArrayList<Coord> findStarts(char[][] chars) {
         ArrayList<Coord> starts = new ArrayList<>();

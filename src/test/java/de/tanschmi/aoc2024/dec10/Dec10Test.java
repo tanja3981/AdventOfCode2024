@@ -47,7 +47,7 @@ class Dec10Test {
         assertEquals(3L, result);
     }
 
-      @Test
+    @Test
     void task1_smallExample2() {
         String input = """
                 ..90..9
@@ -57,10 +57,58 @@ class Dec10Test {
                 765.987
                 876....
                 987....""";
-          long result = dec10.task1(input);
-          assertEquals(4L, result);
-      }
+        long result = dec10.task1(input);
+        assertEquals(4L, result);
+    }
 
+    @Test
+    void task2_smallExample() {
+        String input = """
+                ..90..9
+                ...1.98
+                ...2..7
+                6543456
+                765.987
+                876....
+                987....""";
 
+        long result = dec10.task2(input);
+        assertEquals(13, result);
+    }
 
+    @Test
+    void task2_smallExample2() {
+        String input = """
+                012345
+                123456
+                234567
+                345678
+                4.6789
+                56789.""";
+
+        long result = dec10.task2(input);
+        assertEquals(227, result);
+    }
+
+    @Test
+    void task2_largeExample() {
+        String input = """
+                89010123
+                78121874
+                87430965
+                96549874
+                45678903
+                32019012
+                01329801
+                10456732""";
+        long result = dec10.task2(input);
+        assertEquals(81, result);
+    }
+
+    @Test
+    void task2() throws IOException {
+        String input = loadInput("inputs/dec10.txt");
+        long result = dec10.task2(input);
+        assertEquals(1514, result);
+    }
 }

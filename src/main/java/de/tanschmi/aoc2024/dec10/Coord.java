@@ -8,9 +8,21 @@ import lombok.EqualsAndHashCode;
 public class Coord {
     int row;
     int col;
+    Coord previous;
+
+    /**
+     * for task 1
+     * @param row
+     * @param col
+     */
+    public Coord(int row, int col) {
+        this.row = row;
+        this.col = col;
+        this.previous = null;
+    }
 
     @Override
     public String toString() {
-        return row + "," + col;
+        return row + "," + col + (previous == null ? "" : ", (" + previous.toString() + ")");
     }
 }
